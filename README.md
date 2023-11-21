@@ -87,4 +87,4 @@ The project is organized into the following sections:
 
 This project addresses the contemporary challenge of counterfeit logos using a combination of front-end development and machine learning. The collaborative effort of the team ensures a comprehensive and effective solution.
 
-Feel free to explore the code and contribute to the project!
+Feel free to explore the code and contribute to the project! 🚀
