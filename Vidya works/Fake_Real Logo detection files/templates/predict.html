@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Classifier</title>
+    <style>
+   
+        body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    background: url('static/img/96.jpg') no-repeat center center fixed;
+    background-size: cover; /* Add this line to make sure the background image covers the entire body */
+}
+
+        #image-preview {
+            display: none;
+            max-width: 100%;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #082D59;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="file"] {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 30px;
+            display: block;
+            width: 100%;
+            height: 50px;
+            border: none;
+            outline: none;
+            border-radius: 25px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: linear-gradient(135deg,#6b97d1 0%,#090124 100%);
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: navy; /* Change text color to navy blue */
+            text-align: center; /* Center text */
+        }
+
+        img {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 40px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .bottom-image {
+            max-width: 30%; /* Adjust the size as needed */
+            height: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            float: right; /* Align to the left */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Logo Classifier</h1>
+
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".png, .jpg, .jpeg" required onchange="previewImage(this);">
+        <div id="image-preview"></div>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if prediction is not none %}
+        <h2>Prediction: {{ "Genuine" if prediction == 1 else "Fake" }}</h2>
+    {% endif %}
+
+    <!-- Add the image at the bottom of the page -->
+    <img class="bottom-image" src="static\img\ill.png" alt="Bottom Image">
+
+    <script>
+        function previewImage(input) {
+            var preview = document.getElementById('image-preview');
+            while (preview.firstChild) {
+                preview.removeChild(preview.firstChild);
+            }
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.maxWidth = '100%';
+                    img.style.height = 'auto';
+                    preview.appendChild(img);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
